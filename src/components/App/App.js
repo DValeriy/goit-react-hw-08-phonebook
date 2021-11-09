@@ -1,91 +1,63 @@
 import s from "./App.module.css";
 
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import shortid from "shortid";
 
 import Form from "../Form";
 import ContactList from "../ContactList";
 import Filter from "../Filter";
 
-class App extends Component {
-  state = {
-    contacts: [],
-    filter: "",
-  };
+const App = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState("");
 
-  componentDidMount() {
+  useEffect(() => {
     try {
       const loadContacts = JSON.parse(localStorage.getItem("contacts"));
-      if (Array.isArray(loadContacts)) {
-        this.setState({
-          contacts: loadContacts,
-        });
-      }
+      if (Array.isArray(loadContacts)) setContacts(loadContacts);
     } catch (error) {
       console.error(error);
-      this.setState({
-        contacts: [],
-      });
+      setContacts([]);
     }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    const { contacts } = this.state;
-    if (prevState.contacts !== contacts)
-      localStorage.setItem("contacts", JSON.stringify(contacts));
-  }
+  }, []);
 
-  handleSubmitForm = ({ name, number }) => {
-    const { contacts } = this.state;
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
+  const handleSubmitForm = ({ name, number }) => {
     contacts.some(
       ({ name: contactName }) =>
         contactName.toLocaleLowerCase() === name.toLocaleLowerCase()
     )
       ? alert(`${name} is already in contacts`)
-      : this.setState((prev) => ({
-          contacts: [
-            ...prev.contacts,
-            { name, number, id: shortid.generate() },
-          ],
-        }));
+      : setContacts([...contacts, { name, number, id: shortid.generate() }]);
   };
-  handleFilter = ({ target }) => {
-    const { value } = target;
-    this.setState({
-      filter: value,
-    });
+  const handleFilter = ({ target: { value } }) => {
+    setFilter(value);
   };
-  removeItem = (id) => {
-    // const delItem = target.closest("LI").firstChild.textContent;
-    this.setState((prev) => ({
-      contacts: prev.contacts.filter(({ name }) => name !== id),
-      // contacts: [...prev.contacts.filter(({ name }) => name !== delItem)],
-    }));
+
+  const removeItem = (id) => {
+    setContacts(contacts.filter(({ name }) => name !== id));
   };
-  filteredContacts = () => {
-    const { contacts, filter } = this.state;
+
+  const filteredFn = () => {
     return filter
       ? contacts.filter(({ name }) => {
           return name.toLowerCase().includes(filter.toLowerCase());
         })
       : contacts;
   };
-  render() {
-    const { contacts, filter } = this.state;
-
-    return (
-      <div className="App">
-        <h1 className={s.title}>Phonebook</h1>
-        <Form handleSubmitForm={this.handleSubmitForm} />
-        <h2 className={s.title}>Contacts</h2>
-        <Filter handleFilter={this.handleFilter} value={filter} />
-        <ContactList
-          contacts={this.filteredContacts()}
-          removeItem={this.removeItem}
-        />
-      </div>
-    );
-  }
-}
+  const filteredContacts = filteredFn();
+  return (
+    <div className="App">
+      <h1 className={s.title}>Phonebook</h1>
+      <Form handleSubmitForm={handleSubmitForm} />
+      <h2 className={s.title}>Contacts</h2>
+      <Filter handleFilter={handleFilter} value={filter} />
+      <ContactList contacts={filteredContacts} removeItem={removeItem} />
+    </div>
+  );
+};
 
 export default App;
