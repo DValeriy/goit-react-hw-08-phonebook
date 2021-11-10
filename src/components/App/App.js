@@ -1,6 +1,6 @@
 import s from "./App.module.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import shortid from "shortid";
 
 import Form from "../Form";
@@ -10,6 +10,7 @@ import Filter from "../Filter";
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState("");
+  const [lang, setLang] = useState("ru");
 
   useEffect(() => {
     try {
@@ -42,6 +43,7 @@ const App = () => {
   };
 
   const filteredFn = () => {
+    console.log("ok");
     return filter
       ? contacts.filter(({ name }) => {
           return name.toLowerCase().includes(filter.toLowerCase());
@@ -49,10 +51,23 @@ const App = () => {
       : contacts;
   };
   const filteredContacts = filteredFn();
+  // test usememo
+  // const filteredContacts = useMemo(() => filteredFn(), [filter, contacts]);
   return (
     <div className="App">
       <h1 className={s.title}>Phonebook</h1>
       <Form handleSubmitForm={handleSubmitForm} />
+      {/* test usememo
+      <<select
+        name="lang"
+        value={lang}
+        onChange={({ target: { value } }) => {
+          setLang(value);
+        }}
+      >
+        <option value="ru">ru</option>
+        <option value="en">en</option>
+      </select> */}
       <h2 className={s.title}>Contacts</h2>
       <Filter handleFilter={handleFilter} value={filter} />
       <ContactList contacts={filteredContacts} removeItem={removeItem} />
