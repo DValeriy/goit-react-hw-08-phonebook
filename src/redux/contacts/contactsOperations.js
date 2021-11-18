@@ -19,7 +19,10 @@ export const getContacts = () => (dispatch) => {
   dispatch(getContactsRequest());
 
   getContactsApi()
-    .then((contacts) => dispatch(getContactsSuccess(contacts)))
+    .then((contacts) => {
+      console.log(contacts);
+      return dispatch(getContactsSuccess(contacts));
+    })
     .catch((err) => dispatch(getContactsError(err.message)));
 };
 
@@ -35,6 +38,6 @@ export const removeContact = (id) => (dispatch) => {
   dispatch(removeContactRequest());
 
   removeContactsApi(id)
-    .then((index) => dispatch(removeContactSuccess(index)))
+    .then((id) => dispatch(removeContactSuccess(id)))
     .catch((err) => dispatch(removeContactError(err.message)));
 };

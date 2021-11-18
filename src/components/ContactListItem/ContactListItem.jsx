@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ContactListItem = ({ item: { name, number, id } }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts);
   const cbOnRemove = () => {
-    dispatch(removeContact({ id, contacts }));
+    dispatch(removeContact(id));
   };
   return (
     <li className={s.item}>

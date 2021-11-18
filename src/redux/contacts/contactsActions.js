@@ -1,13 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 
-import { ADD_Contact, GET_Contacts, REMOVE_Contact } from "./contactsConstants";
-
-export const addContact = createAction(ADD_Contact);
-
-export const removeContact = createAction(REMOVE_Contact);
-
-export const getContacts = createAction(GET_Contacts);
-
 export const getContactsRequest = createAction("Contacts/getContactssRequest");
 export const getContactsSuccess = createAction("Contacts/getContactssSuccess");
 export const getContactsError = createAction("Contacts/getContactssError");
