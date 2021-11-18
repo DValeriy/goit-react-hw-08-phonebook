@@ -1,6 +1,4 @@
 import s from "./Filter.module.css";
-// import PropTypes from "prop-types";
-// import { connect } from "react-redux";
 import { changeFilter } from "../../redux/filter/filterActions";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector } from "../../redux/selectors";
@@ -23,23 +21,5 @@ const Filter = () => {
     </div>
   );
 };
-
-//---------------for version without hooks use---------------
-// const Filter = ({ changeFilter, filter }) => {}
-
-// Filter.propTypes = {
-//   filter: PropTypes.string.isRequired,
-//   changeFilter: PropTypes.func.isRequired,
-// };
-
-// const mapStatetoToProps = ({ filter }) => ({
-//   filter,
-// });
-// const mapDispatchToProps = (dispatch) => ({
-//   changeFilter: (value) => dispatch(changeFilter(value)),
-// });
-
-// export default connect(mapStatetoToProps, mapDispatchToProps)(Filter);
-//---------------for version without hooks use---------------
 
 export default Filter;

@@ -2,15 +2,15 @@ import s from "./ContactListItem.module.css";
 
 import React from "react";
 import PropTypes from "prop-types";
-// import { connect } from "react-redux";
 
-import { removeContact } from "../../redux/contacts/contactsActions";
-import { useDispatch } from "react-redux";
+import { removeContact } from "../../redux/contacts/contactsOperations";
+import { useDispatch, useSelector } from "react-redux";
 
 const ContactListItem = ({ item: { name, number, id } }) => {
   const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts);
   const cbOnRemove = () => {
-    dispatch(removeContact(id));
+    dispatch(removeContact({ id, contacts }));
   };
   return (
     <li className={s.item}>
@@ -31,12 +31,5 @@ ContactListItem.propTypes = {
   }).isRequired,
   removeContact: PropTypes.func.isRequired,
 };
-
-//---------------for version without hooks use---------------
-// const mapDispatchToProps = (dispatch) => ({
-//   removeContact: (id) => dispatch(removeContact(id)),
-// });
-// export default connect(null, mapDispatchToProps)(ContactListItem);
-//---------------for version without hooks use---------------
 
 export default ContactListItem;
