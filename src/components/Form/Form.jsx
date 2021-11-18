@@ -1,13 +1,24 @@
 import s from "./Form.module.css";
 
+// import PropTypes from "prop-types";
 import { useState } from "react";
-import PropTypes from "prop-types";
+import { connect, useSelector, useDispatch } from "react-redux";
+import shortid from "shortid";
 
-const Form = ({ handleSubmitForm }) => {
+import { addContact } from "../../redux/contacts/contactsActions";
+import { contactsSelector } from "../../redux/selectors/selectors";
+
+const Form = () => {
+  // ----without hooks use----
+  // const Form = ({ addContact, contacts }) => {
+  // const contacts = useSelector(({ contacts }) => contacts);
+  // ----without hooks use----
+
+  const contacts = useSelector((state) => contactsSelector(state));
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  const contact = { name, number };
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
       case "name":
@@ -20,9 +31,15 @@ const Form = ({ handleSubmitForm }) => {
         break;
     }
   };
+
   const cbOnSubmit = (e) => {
     e.preventDefault();
-    handleSubmitForm(contact);
+    contacts.some(
+      ({ name: contactName }) =>
+        contactName.toLowerCase() === name.toLowerCase()
+    )
+      ? alert(`${name} is already in contacts`)
+      : dispatch(addContact({ name, number, id: shortid.generate() }));
     setName("");
     setNumber("");
   };
@@ -60,8 +77,21 @@ const Form = ({ handleSubmitForm }) => {
   );
 };
 
-Form.propTypes = {
-  handleSubmitForm: PropTypes.func.isRequired,
-};
+// ----without hooks use----
+// Form.propTypes = {
+//   contacts: PropTypes.array.isRequired,
+//   addContact: PropTypes.func.isRequired,
+// };
+
+// const mapStatetoToProps = ({ contacts }) => ({
+//   contacts,
+// });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   addContact: (contact) => dispatch(addContact(contact)),
+// });
+
+// export default connect(mapStatetoToProps, mapDispatchToProps)(Form);
+// ----without hooks use----
 
 export default Form;

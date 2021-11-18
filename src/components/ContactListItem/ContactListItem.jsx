@@ -2,10 +2,15 @@ import s from "./ContactListItem.module.css";
 
 import React from "react";
 import PropTypes from "prop-types";
+// import { connect } from "react-redux";
 
-const ContactListItem = ({ name, number, removeItem }) => {
+import { removeContact } from "../../redux/contacts/contactsActions";
+import { useDispatch } from "react-redux";
+
+const ContactListItem = ({ item: { name, number, id } }) => {
+  const dispatch = useDispatch();
   const cbOnRemove = () => {
-    removeItem(name);
+    dispatch(removeContact(id));
   };
   return (
     <li className={s.item}>
@@ -19,9 +24,19 @@ const ContactListItem = ({ name, number, removeItem }) => {
 };
 
 ContactListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  removeItem: PropTypes.func.isRequired,
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  removeContact: PropTypes.func.isRequired,
 };
+
+//---------------for version without hooks use---------------
+// const mapDispatchToProps = (dispatch) => ({
+//   removeContact: (id) => dispatch(removeContact(id)),
+// });
+// export default connect(null, mapDispatchToProps)(ContactListItem);
+//---------------for version without hooks use---------------
 
 export default ContactListItem;

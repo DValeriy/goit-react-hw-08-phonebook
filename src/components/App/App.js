@@ -1,78 +1,56 @@
 import s from "./App.module.css";
 
-import { useEffect, useState, useMemo } from "react";
-import shortid from "shortid";
+// import PropTypes from "prop-types";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 import Form from "../Form";
 import ContactList from "../ContactList";
 import Filter from "../Filter";
 
+// import { getContacts } from "../../redux/contacts/contactsActions";
+
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState("");
-  const [lang, setLang] = useState("ru");
+  //---------------for version without persist and hooks use---------------
+  // const App = ({ contacts, getContacts }) => {
+  // useEffect(() => {
+  //   try {
+  //     const loadContacts = JSON.parse(localStorage.getItem("contacts"));
+  //     if (Array.isArray(loadContacts)) getContacts(loadContacts);
+  //   } catch (error) {
+  //     console.error(error);
+  //     getContacts([]);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    try {
-      const loadContacts = JSON.parse(localStorage.getItem("contacts"));
-      if (Array.isArray(loadContacts)) setContacts(loadContacts);
-    } catch (error) {
-      console.error(error);
-      setContacts([]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   localStorage.setItem("contacts", JSON.stringify(contacts));
+  // }, [contacts]);
+  //---------------for version without persist and hooks use---------------
 
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
-  const handleSubmitForm = ({ name, number }) => {
-    contacts.some(
-      ({ name: contactName }) =>
-        contactName.toLocaleLowerCase() === name.toLocaleLowerCase()
-    )
-      ? alert(`${name} is already in contacts`)
-      : setContacts([...contacts, { name, number, id: shortid.generate() }]);
-  };
-  const handleFilter = ({ target: { value } }) => {
-    setFilter(value);
-  };
-
-  const removeItem = (id) => {
-    setContacts(contacts.filter(({ name }) => name !== id));
-  };
-
-  const filteredFn = () => {
-    console.log("ok");
-    return filter
-      ? contacts.filter(({ name }) => {
-          return name.toLowerCase().includes(filter.toLowerCase());
-        })
-      : contacts;
-  };
-  const filteredContacts = filteredFn();
-  // test usememo
-  // const filteredContacts = useMemo(() => filteredFn(), [filter, contacts]);
   return (
     <div className="App">
       <h1 className={s.title}>Phonebook</h1>
-      <Form handleSubmitForm={handleSubmitForm} />
-      {/* test usememo
-      <<select
-        name="lang"
-        value={lang}
-        onChange={({ target: { value } }) => {
-          setLang(value);
-        }}
-      >
-        <option value="ru">ru</option>
-        <option value="en">en</option>
-      </select> */}
+      <Form />
+
       <h2 className={s.title}>Contacts</h2>
-      <Filter handleFilter={handleFilter} value={filter} />
-      <ContactList contacts={filteredContacts} removeItem={removeItem} />
+      <Filter />
+      <ContactList />
     </div>
   );
 };
+
+//---------------for version without hooks use---------------
+// App.propTypes = {
+//   contacts: PropTypes.array.isRequired,
+//   getContacts: PropTypes.func.isRequired,
+// };
+// const mapStatetoToProps = ({ contacts }) => ({
+//   contacts,
+// });
+// const mapDispatchToProps = (dispatch) => ({
+//   getContacts: (loadContacts) => dispatch(getContacts(loadContacts)),
+// });
+// export default connect(mapStatetoToProps, mapDispatchToProps)(App);
+//---------------for version without  hooks use---------------
 
 export default App;
