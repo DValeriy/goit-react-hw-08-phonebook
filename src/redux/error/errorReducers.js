@@ -8,12 +8,15 @@ import {
   removeContactSuccess,
 } from "../contacts/contactsActions";
 
+const setError = (_, { payload }) => payload;
+const resetError = (_, { payload }) => "";
+
 const errorReducer = createReducer(null, {
-  [getContactsError]: (_, { payload }) => payload,
-  [getContactsSuccess]: (_, { payload }) => "",
-  [addContactError]: (_, { payload }) => payload,
-  [addContactSuccess]: (_, { payload }) => "",
-  [removeContactError]: (_, { payload }) => payload,
-  [removeContactSuccess]: (_, { payload }) => "",
+  [getContactsError]: setError,
+  [getContactsSuccess]: resetError,
+  [addContactError]: setError,
+  [addContactSuccess]: resetError,
+  [removeContactError]: setError,
+  [removeContactSuccess]: resetError,
 });
 export default errorReducer;
