@@ -2,9 +2,18 @@ import axios from "axios";
 
 export const getContactsApi = async () => {
   try {
-    axios.defaults.baseURL = "http://localhost:4040/";
-    const { data } = await axios.get("/contacts");
-    return data;
+    // axios.defaults.baseURL = "http://localhost:4040/";
+    axios.defaults.baseURL =
+      "https://react-learn-3fa24-default-rtdb.firebaseio.com";
+
+    const { data } = await axios.get("/contacts.json");
+    console.log(data);
+    const dataArr = Object.entries(data).map(([id, obj]) => ({
+      ...obj,
+      id,
+    }));
+    console.log(dataArr);
+    return dataArr;
   } catch (err) {
     throw err;
   }
@@ -12,10 +21,12 @@ export const getContactsApi = async () => {
 
 export const addContactsApi = async (contactForApi) => {
   try {
-    axios.defaults.baseURL = "http://localhost:4040/";
-    const { data } = await axios.post("/contacts", { ...contactForApi });
+    // axios.defaults.baseURL = "http://localhost:4040/";
+    axios.defaults.baseURL =
+      "https://react-learn-3fa24-default-rtdb.firebaseio.com";
+    const { data } = await axios.post("/contacts.json", contactForApi);
 
-    return data;
+    return { id: data.name, ...contactForApi };
   } catch (err) {
     throw err;
   }
@@ -23,8 +34,10 @@ export const addContactsApi = async (contactForApi) => {
 
 export const removeContactsApi = async (id) => {
   try {
-    axios.defaults.baseURL = "http://localhost:4040/";
-    const response = await axios.delete("/contacts/" + id);
+    // axios.defaults.baseURL = "http://localhost:4040/";
+    axios.defaults.baseURL =
+      "https://react-learn-3fa24-default-rtdb.firebaseio.com";
+    const response = await axios.delete("/contacts/" + id + ".json");
     return id;
   } catch (err) {
     throw err;
