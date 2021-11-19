@@ -20,7 +20,6 @@ export const getContacts = () => (dispatch) => {
 
   getContactsApi()
     .then((contacts) => {
-      console.log(contacts);
       return dispatch(getContactsSuccess(contacts));
     })
     .catch((err) => dispatch(getContactsError(err.message)));

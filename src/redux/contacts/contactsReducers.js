@@ -8,7 +8,6 @@ import {
 
 export const contactsReducer = createReducer([], {
   [getContactsSuccess]: (_, { payload }) => {
-    console.log(payload);
     return payload;
   },
   [addContactSuccess]: (state, { payload }) => [...state, payload],

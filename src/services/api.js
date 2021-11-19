@@ -4,11 +4,9 @@ export const getContactsApi = async () => {
   try {
     axios.defaults.baseURL = "http://localhost:4040/";
     const { data } = await axios.get("/contacts");
-    console.log(data);
     return data;
   } catch (err) {
-    // Promise.reject(err.massage);
-    throw new Error(err.massage);
+    throw err;
   }
 };
 
@@ -19,8 +17,7 @@ export const addContactsApi = async (contactForApi) => {
 
     return data;
   } catch (err) {
-    // Promise.reject(err.massage);
-    throw new Error(err.massage);
+    throw err;
   }
 };
 
@@ -30,7 +27,6 @@ export const removeContactsApi = async (id) => {
     const response = await axios.delete("/contacts/" + id);
     return id;
   } catch (err) {
-    // Promise.reject(err.massage);
-    throw new Error(err.massage);
+    throw err;
   }
 };
