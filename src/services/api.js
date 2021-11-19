@@ -7,12 +7,10 @@ export const getContactsApi = async () => {
       "https://react-learn-3fa24-default-rtdb.firebaseio.com";
 
     const { data } = await axios.get("/contacts.json");
-    console.log(data);
     const dataArr = Object.entries(data).map(([id, obj]) => ({
       ...obj,
       id,
     }));
-    console.log(dataArr);
     return dataArr;
   } catch (err) {
     throw err;
