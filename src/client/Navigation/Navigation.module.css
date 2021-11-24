@@ -1,0 +1,12 @@
+.nav {
+  padding: 5px;
+  color: rgb(64, 64, 190);
+  display: flex;
+  border: 2px solid rgb(240, 210, 112);
+}
+.active {
+  color: rgb(244, 248, 21);
+}
+.navList {
+  margin-bottom: 20px;
+}

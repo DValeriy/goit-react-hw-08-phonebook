@@ -1,0 +1,30 @@
+.item {
+  margin-bottom: 5px;
+  border: 2px solid rgb(147, 204, 241);
+  background-color: rgb(235, 225, 95);
+  display: block;
+  padding: 5px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+.item span {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.button {
+  display: block;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: auto;
+}

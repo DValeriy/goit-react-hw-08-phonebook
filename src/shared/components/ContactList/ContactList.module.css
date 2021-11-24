@@ -1,0 +1,7 @@
+.list {
+  border: 2px solid blueviolet;
+  display: block;
+  padding: 5px;
+  margin: 10px 20px;
+  border-radius: 10px;
+}

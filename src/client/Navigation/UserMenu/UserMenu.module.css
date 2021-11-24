@@ -1,0 +1,31 @@
+.link {
+  display: inline-block;
+  background-color: #b5be2c;
+  color: #ffffff;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: 20px;
+  opacity: 0.9;
+  border-radius: 5px;
+}
+.active {
+  background-color: #69979b;
+  color: #0a0909;
+}
+.ul {
+  display: flex;
+}
+.button {
+  color: #ce4a4a;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: auto;
+  opacity: 0.9;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #9ca8ad;
+  cursor: pointer;
+}

@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 import { CHANGE_Filter } from "./filterConstants";
+import { changeFilter } from "./filterActions";
 
-export const filterReducer = createReducer("", {
-  [CHANGE_Filter]: (state, { payload }) => payload,
+const filterReducer = createReducer("", {
+  [changeFilter]: (state, { payload }) => payload,
 });
+export default filterReducer;
