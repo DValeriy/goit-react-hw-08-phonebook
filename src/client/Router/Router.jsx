@@ -1,4 +1,4 @@
-import { Switch } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -34,6 +34,7 @@ const Router = () => {
           <ContactList />
         </ContactsPage>
       </PrivateRoute>
+      <Redirect to="/login" />
     </Switch>
   );
 };

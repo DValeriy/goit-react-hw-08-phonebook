@@ -1,4 +1,5 @@
 import axios from "axios";
+import Notiflix from "notiflix";
 
 axios.defaults.baseURL = "https://connections-api.herokuapp.com";
 
@@ -12,44 +13,78 @@ const token = {
 };
 
 export const authUserApi = async (user) => {
-  const { data } = await axios.post("/users/signup", user);
-  token.set(data.token);
-  return data;
+  try {
+    const { data } = await axios.post("/users/signup", user);
+    token.set(data.token);
+    return data;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };
 
 export const loginUserApi = async (user) => {
-  const { data } = await axios.post("/users/login", user);
-  token.set(data.token);
-  return data;
+  try {
+    const { data } = await axios.post("/users/login", user);
+    token.set(data.token);
+    return data;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };
 
 export const logoutUserApi = async () => {
-  const { data } = await axios.post("/users/logout");
-  token.unset();
-  return;
+  try {
+    const { data } = await axios.post("/users/logout");
+    token.unset();
+    return;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };
 
 export const currentUserApi = async (tokenFromLS) => {
-  token.set(tokenFromLS);
-  const { data } = await axios.get("/users/current");
-  return data;
+  try {
+    token.set(tokenFromLS);
+    const { data } = await axios.get("/users/current");
+    return data;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };
 
 export const getContactsApi = async (tokenFromRS) => {
-  // axios.defaults.headers.common["Authorization"] = token;
-  token.set(tokenFromRS);
-  const { data } = await axios.get("/contacts");
-  return data;
+  try {
+    token.set(tokenFromRS);
+    const { data } = await axios.get("/contacts");
+    return data;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };
 
 export const addContactsApi = async (contact, tokenFromRS) => {
-  token.set(tokenFromRS);
-  const { data } = await axios.post("/contacts", contact);
-  return data;
+  try {
+    token.set(tokenFromRS);
+    const { data } = await axios.post("/contacts", contact);
+    return data;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };
 
 export const removeContactsApi = async (contactId, tokenFromRS) => {
-  token.set(tokenFromRS);
-  const data = await axios.delete(`/contacts/${contactId}`);
-  return contactId;
+  try {
+    token.set(tokenFromRS);
+    const data = await axios.delete(`/contacts/${contactId}`);
+    return contactId;
+  } catch (error) {
+    Notiflix.Notify.failure(error.message);
+    return error;
+  }
 };

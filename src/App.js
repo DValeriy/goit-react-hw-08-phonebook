@@ -20,7 +20,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(userCurrent());
-    push("/login");
   }, [dispatch]);
 
   return (
